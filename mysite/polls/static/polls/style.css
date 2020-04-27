@@ -1,0 +1,16 @@
+li {
+	font-family: Electra, Minion;
+	font-size: 20;
+}
+
+body {
+    background: white url("images/logo_esilv_png_couleur.png") no-repeat;
+    background-position: top right;
+    background-size: 25%;
+}
+
+div {
+	text-align: center;
+	font-family: Electra, Minion;
+	font-size: 40;
+}
