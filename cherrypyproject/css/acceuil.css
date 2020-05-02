@@ -1,0 +1,13 @@
+button{
+	margin: 15px;
+	height: 75px;
+	width: 150px;
+	align-items: center;
+}
+.buttons{
+	text-align: center;
+}
+p{
+	margin-top: 10px;
+	margin-left: 0px;
+}

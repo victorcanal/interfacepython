@@ -1,0 +1,26 @@
+*{
+	font-family: Arial;
+}
+h1 {
+	color: white;
+	text-align: center;
+}
+h3{
+	margin-left : 20px;
+}
+p {
+	color: gray;
+	margin-left : 20px;
+}
+input {
+	margin-left : 20px;
+	margin-bottom: 10px;
+}
+header{
+	margin: 0px;
+	padding: 10px;
+	background-color: rgba(0,0,0,1);
+}
+body{
+	margin: 0px;
+}
