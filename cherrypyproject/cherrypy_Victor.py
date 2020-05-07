@@ -15,6 +15,8 @@ class Acceuil(object):
 
 class Inscription(object):
     def __init__(self):
+        #self.acceuil = Acceuil() #censé être pour les navigations bars
+        # self.connexion = Connexion()
         pass
         
     def index(self):
@@ -23,6 +25,8 @@ class Inscription(object):
     
 class Connexion(object):
     def __init__(self):
+        # self.acceuil = Acceuil()
+        # self.inscription = Inscription()
         pass
     
     def index(self):
