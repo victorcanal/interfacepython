@@ -6,14 +6,12 @@ h1 {
 	text-align: center;
 }
 h3{
-	margin-left : 20px;
+	margin: 30px 20px;
 }
 p {
 	color: gray;
-	margin-left : 20px;
 }
-input {
-	margin-left : 20px;
+input{
 	margin-bottom: 10px;
 }
 header{
@@ -23,6 +21,9 @@ header{
 }
 body{
 	margin: 0px;
+}
+div{
+	margin:20px;
 }
 nav{
 	position: -webkit-sticky;

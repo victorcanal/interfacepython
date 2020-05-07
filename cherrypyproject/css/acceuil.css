@@ -3,6 +3,9 @@ button{
 	height: 75px;
 	width: 150px;
 	align-items: center;
+	background-color: #000000;
+	color: #FFFFFF;
+	border-color: #000000;
 }
 .buttons{
 	text-align: center;
