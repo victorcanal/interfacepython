@@ -19,7 +19,7 @@ class Produits(object):
  index.exposed = True
  
    @cherrypy.expose
-   def Recapitulatif(self, quantitePates, quantiteRiz, quantiteSucre, quantiteFarine):
+   def result(self, quantitePates, quantiteRiz, quantiteSucre, quantiteFarine):
         some_string = quantitePates + ' ' + quantiteRiz + ' ' + quantiteSucre + ' ' + quantiteFarine
         cherrypy.session['mystring'] = some_string
         file = open("test.txt","w")
