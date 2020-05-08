@@ -3,20 +3,20 @@
 import cherrypy
 import os
 
-class Acceuil(object):
+class Accueil(object):
     @cherrypy.expose 
     def __init__(self):
         self.inscription = Inscription()
         self.connexion = Connexion()
         
     def index(self):
-        return open("html/acceuil.html")
+        return open("html/accueil.html")
     index.exposed = True
 
 class Inscription(object):
     @cherrypy.expose 
     def __init__(self):
-        #self.acceuil = Acceuil() #censé être pour les navigations bars
+        #self.accueil = Accueil() #censé être pour les navigations bars
         #self.connexion = Connexion()
         pass
         
@@ -26,9 +26,9 @@ class Inscription(object):
     
     @cherrypy.expose
     def generate(self, inputidentifiant, inputpassword, inputnom, inputprenom, inputadresse, inputemail, inputnumero):
-        some_string = inputidentifiant + inputpassword + inputnom + inputprenom + inputadresse + inputemail + inputnumero
+        some_string = inputidentifiant + "," + inputpassword + "," +inputnom + "," + inputprenom + "," + inputadresse + "," + inputemail + "," + inputnumero
         cherrypy.session['mystring'] = some_string
-        file = open("connexion.txt","w")
+        file = open("inscription.txt","w")
         file.write(some_string)
         file.close()
         return some_string
@@ -39,7 +39,7 @@ class Inscription(object):
 class Connexion(object):
     @cherrypy.expose
     def __init__(self):
-        # self.acceuil = Acceuil()
+        # self.accueil = Accueil()
         # self.inscription = Inscription()
         pass
     
@@ -49,9 +49,9 @@ class Connexion(object):
     
     @cherrypy.expose
     def generate(self, inputidentifiant, inputpassword):
-        some_string = inputidentifiant + inputpassword
+        some_string = inputidentifiant + "," + inputpassword
         cherrypy.session['mystring'] = some_string
-        file = open("inscription.txt","w")
+        file = open("connexion.txt","w")
         file.write(some_string)
         file.close()
         return some_string
@@ -76,9 +76,9 @@ conf = {
         # { 'tools.staticfile.on':True,
         #   'tools.staticfile.filename':os.path.abspath("./css/global.css")
         # },
-        # '/acceuil.css':
+        # '/accueil.css':
         # { 'tools.staticfile.on':True,
-        #   'tools.staticfile.filename':os.path.abspath("./css/acceuil.css")
+        #   'tools.staticfile.filename':os.path.abspath("./css/accueil.css")
         # }
         }
-cherrypy.quickstart(Acceuil(), config = conf)
+cherrypy.quickstart(Accueil(), config = conf)
