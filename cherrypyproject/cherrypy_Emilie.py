@@ -5,21 +5,26 @@ import os
 
 
 class site(object):
- def __init__(self):
-  self.produits = Produits()
-  self.recapitulatif = Recapitulatif()
+    @cherrypy.expose
+    def __init__(self):
+        self.produits = Produits()
+        self.recapitulatif = Recapitulatif()
+        
+    def index(self):
+        return open("html/produits.html")
+    index.exposed = True
 
 class Produits(object):
- @cherrypy.expose
- def __init__(self):
-    pass
+    @cherrypy.expose
+    def __init__(self):
+        pass
   
- def index(self):
-   return open("html/produits.html")
- index.exposed = True
+    def index(self):
+        return open("html/produits.html")
+    index.exposed = True
  
-   @cherrypy.expose
-   def result(self, quantitePates, quantiteRiz, quantiteSucre, quantiteFarine):
+    @cherrypy.expose
+    def result(self, quantitePates, quantiteRiz, quantiteSucre, quantiteFarine):
         some_string = quantitePates + ' ' + quantiteRiz + ' ' + quantiteSucre + ' ' + quantiteFarine
         cherrypy.session['mystring'] = some_string
         file = open("test.txt","w")
@@ -27,8 +32,8 @@ class Produits(object):
         file.close()
         return some_string
        
-   def display(self):
-     return cherrypy.session['mystring']
+    def display(self):
+        return cherrypy.session['mystring']
     
     
 class Recapitulatif(object):
