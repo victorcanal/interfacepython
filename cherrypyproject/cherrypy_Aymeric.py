@@ -24,8 +24,6 @@ class Accueil(object):
 class Inscription(object):
     @cherrypy.expose 
     def __init__(self):
-        #self.accueil = Accueil() 
-        #self.connexion = Connexion()
         pass
         
     def index(self):
@@ -65,30 +63,18 @@ class Inscription(object):
 class Connexion(object):
     @cherrypy.expose
     def __init__(self):
-        pass
+        self.inscription = Inscription()
         
-    
     def index(self):
         return open("html/connexion.html")
     index.exposed = True
     
     @cherrypy.expose
     def generate(self, inputemail, inputpassword):
-        some_string = inputemail + "," + inputpassword
-        cherrypy.session['mystring'] = "vous êtes connectés ! "
-        file = open("connexion.txt","w")
-        file.write(some_string)
-        file.close()
         if self.checkIfClientInscrit(inputpassword,inputemail) == False:
-            cherrypy.session['mystring'] = "vous n'êtes pas inscrit, veuillez vous inscrire "
-            self.display()
-            return open
-            
+            raise cherrypy.HTTPRedirect('/inscription/')
         else:
-            cherrypy.session['mystring'] = "vous êtes connectés ! "
-            self.display()
-            
-            
+            self.display("vous êtes connectés ! ")
     
     def checkIfClientInscrit(self,inputpassword,inputemail):
         inscrit = True
@@ -97,13 +83,17 @@ class Connexion(object):
         try :
             cursor = connection.cursor()
             cursor.execute(sql,(inputpassword,inputemail))
-            if cursor == None:
+            resultatSelect = []
+            for row in cursor:
+                resultatSelect.append(row)
+            if len(resultatSelect)==0:
                 inscrit = False
         finally:
             connection.close()
         return inscrit
     
-    def display(self):
+    def display(self,message):
+        cherrypy.session['mystring'] = message
         return cherrypy.session['mystring']
 
 conf = {
