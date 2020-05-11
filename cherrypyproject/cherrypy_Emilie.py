@@ -35,7 +35,7 @@ class Produits(object):
         # return open("html/produits.html")
         html = '<html><head>'
         html += '<meta charset="utf-8" name="Produits" content="Commande des produits">'
-        html += '<link rel="stylesheet" type="text/css" href="../css/liste_commande.css">'
+        html += '<link rel="stylesheet" type="text/css" href="css/liste_commande.css">'
         html += '<title>Commande des Produits</title>'
         html += '</head>'
         html += '<body>'
@@ -68,7 +68,7 @@ class Produits(object):
         html = '<html><head>'
         
         html += '<meta charset="utf-8" name="Recapitulatif" content="Récapitulatif de la commande">'
-        html += '<link rel="stylesheet" type="text/css" href="../css/recap.css">'
+        html += '<link rel="stylesheet" type="text/css" href="css/recap.css">'
         html += '<title>Récapitulatif de la commande</title></head>'
         html += '<body><nav>'
         html += '<a href="Produits">Produits</a>'
