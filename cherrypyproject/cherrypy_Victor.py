@@ -25,8 +25,8 @@ class Inscription(object):
     index.exposed = True
     
     @cherrypy.expose
-    def generate(self, inputemail, inputpassword, inputnom, inputprenom, inputadresse, inputnumero):
-        some_string = inputemail + "," + inputpassword + "," +inputnom + "," + inputprenom + "," + inputadresse + "," + inputnumero
+    def generate(self, inputemail, inputpassword, inputnom, inputprenom, inputadresse, inputnumero, inputnombre, inputnumcarte, inputexpirationdate, inputcryptogramme):
+        some_string = inputemail + "," + inputpassword + "," +inputnom + "," + inputprenom + "," + inputadresse + "," + inputnumero + "," + inputnombre + "," + inputnumcarte + "," + inputexpirationdate + "," + inputcryptogramme
         cherrypy.session['mystring'] = some_string
         # file = open("inscription.txt","w")
         # file.write(some_string)
