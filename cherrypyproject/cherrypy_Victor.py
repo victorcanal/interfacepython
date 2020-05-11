@@ -25,16 +25,16 @@ class Inscription(object):
     index.exposed = True
     
     @cherrypy.expose
-    def generate(self, inputidentifiant, inputpassword, inputnom, inputprenom, inputadresse, inputemail, inputnumero):
-        some_string = inputidentifiant + "," + inputpassword + "," +inputnom + "," + inputprenom + "," + inputadresse + "," + inputemail + "," + inputnumero
+    def generate(self, inputemail, inputpassword, inputnom, inputprenom, inputadresse, inputnumero):
+        some_string = inputemail + "," + inputpassword + "," +inputnom + "," + inputprenom + "," + inputadresse + "," + inputnumero
         cherrypy.session['mystring'] = some_string
-        file = open("inscription.txt","w")
-        file.write(some_string)
-        file.close()
+        # file = open("inscription.txt","w")
+        # file.write(some_string)
+        # file.close()
         return some_string
 
-    def display(self):
-        return cherrypy.session['mystring']
+    # def display(self):
+    #     return cherrypy.session['mystring']
     
 class Connexion(object):
     @cherrypy.expose
@@ -48,16 +48,16 @@ class Connexion(object):
     index.exposed = True
     
     @cherrypy.expose
-    def generate(self, inputidentifiant, inputpassword):
-        some_string = inputidentifiant + "," + inputpassword
+    def generate(self, inputemail, inputpassword):
+        some_string = inputemail + "," + inputpassword
         cherrypy.session['mystring'] = some_string
-        file = open("connexion.txt","w")
-        file.write(some_string)
-        file.close()
+        # file = open("connexion.txt","w")
+        # file.write(some_string)
+        # file.close()
         return some_string
     
-    def display(self):
-        return cherrypy.session['mystring']
+    # def display(self):
+    #     return cherrypy.session['mystring']
 
 conf = {
         '/css':

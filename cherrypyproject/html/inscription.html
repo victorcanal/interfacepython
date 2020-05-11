@@ -18,8 +18,8 @@
 		<div>
 			<h3>Veuillez entrer vos informations :</h3>
 			<form method="post" action="generate">
-				<p>Identifiant</p>
-				<input type="text" name="inputidentifiant">
+				<p>Adresse e-mail</p>
+				<input type="email" name="inputemail">
 				<p>Mot de passe</p>
 				<input type="password" name="inputpassword">
 				<p>Nom</p>
@@ -28,10 +28,20 @@
 				<input type="text" name="inputprenom">
 				<p>Adresse</p>
 				<input type="text" name="inputadresse">
-				<p>Adresse e-mail</p>
-				<input type="email" name="inputemail">
 				<p>Num&eacutero de t&eacutel&eacutephone</p>
 				<input type="tel" name="inputnumero">
+				<p>Nombre de personnes dans le foyer</p>
+				<input type="number" name="inputnumber">
+				<p>Informations bancaires :</p>
+				<div id="infosbank">
+					<p>Num&eacutero de la carte :</p>
+					<input type="number" name="inputnumcarte" minlength="16" maxlength="16">
+					<p>Date d'expiration :</p>
+					<input type="date" min="2020-04-01" value="2020-04-01" name="inputexpirationdate">
+					<p>Cryptogramme</p>
+					<input type="password" name="inputcryptogramme">
+				</div>
+				
 				<p>
 				<button type="submit">Continuer</button>
 			</form>

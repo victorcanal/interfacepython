@@ -1,0 +1,9 @@
+div#infosbank{
+	margin: 0px;
+	padding: 10px;
+	padding-left: 40px;
+	padding-right: 40px;
+	margin-left: 20px;
+	border: solid black 2px;
+	display: inline-block;
+}
