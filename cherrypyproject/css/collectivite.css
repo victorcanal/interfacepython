@@ -1,0 +1,15 @@
+#myHeader {
+  background-color: lightblue;
+  color: black;
+  padding: 40px;
+  text-align: center;
+}
+
+h2{
+  float: right;
+}
+
+img {
+  height: 100px;
+  float: left;
+}
