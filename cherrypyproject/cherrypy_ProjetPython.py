@@ -110,8 +110,14 @@ class Produits(object):
             #obligés de mettre la liste des quantités dans une liste, cherrypy ne prend pas en compte les matrices
             html += '<label for ="unite">' + self.quantite[i][2] + '.</label></br>'
         
-        html += '<p></p><button type="submit">Valider la commande</button>'
-        html += '</form></body></html>'
+        html += '</table>'
+        html += '<table style = "width : 100%">'
+        html += '<tr>'
+        html += '<th><p>Votre commande sera directement débitée de votre carte bancaire.</p>'
+        html += '<p></p><button type="submit">Se déconnecter</button>'
+        html += '<p></p><button type="submit">Passer une autre commande</button></th>'
+        html += '</tr>'
+        html += '</table></body></html>'
         return html
     index.exposed = True
     #toutes les quantités sont dans un tableau
