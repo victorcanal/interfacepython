@@ -1,6 +1,8 @@
 import cherrypy
 import os
 import pymysql
+import folium
+from geopy.geocoders import Nominatim
 
 def connexionBDD():
     connection = pymysql.connect(host='127.0.0.1',
@@ -93,7 +95,7 @@ class Connexion(object):
         if self.checkIfClientInscrit(inputpassword,inputemail) == False:
             raise cherrypy.HTTPRedirect('/inscription/')
         else:
-            UTILISATEUR_COURANT=self.checkIfClientInscrit(inputpassword,inputemail)
+            #UTILISATEUR_COURANT=self.checkIfClientInscrit(inputpassword,inputemail)
             raise cherrypy.HTTPRedirect('/produits/')
     
     def checkIfClientInscrit(self,inputpassword,inputemail):
@@ -119,7 +121,44 @@ class Connexion(object):
 class Collectivite(object):
     @cherrypy.expose
     def __init__(self):
+        self.accueil = Accueil()
         self.top5produits = self.produitsPlusDemandes()
+        c= folium.Map(location=[48.8600019,2.3449987],zoom_start=15) #zoom sur le quartier cible, nous 1e arrondissement
+        geolocator = Nominatim()
+        #location = geolocator.geocode("29 rue des Bourdonnais, 75001")
+        #folium.Marker([location.latitude, location.longitude],popup="carrefour").add_to(c)
+        sql = "select adresse,nom from magasin"
+        connection = connexionBDD()
+        tableauAdresse = []
+        try:
+            cursor = connection.cursor()
+            cursor.execute(sql)
+            connection.commit()
+            for row in cursor:
+                tableauAdresse.append(row['adresse','nom'])
+        finally:
+            connection.close()
+        for row in tableauAdresse:
+            location = geolocator.geocode(row[0])
+            folium.Marker([location.latitude, location.longitude],popup=row[1]).add_to(c)
+        c.save('html/mapmagasin.html')
+        a = folium.Map(location=[48.8600019,2.3449987],zoom_start=15) #zoom sur le quartier cible, nous 1e arrondissement
+        geolocator = Nominatim()
+        sql = "select adresse from foyer"
+        connection = connexionBDD()
+        tableauAdresse = []
+        try:
+            cursor = connection.cursor()
+            cursor.execute(sql)
+            connection.commit()
+            for row in cursor:
+                tableauAdresse.append(row['adresse'])
+        finally:
+            connection.close()
+        for row in tableauAdresse:
+            location = geolocator.geocode(row)
+            folium.Marker([location.latitude, location.longitude]).add_to(a)
+        a.save('html/mapfoyer.html')
         
     def produitsPlusDemandes(self):
         sql = "select nom_produit ,sum(quantiteCommandee) from produit group by nom_produit order by sum(quantiteCommandee) desc limit 5;"
@@ -146,7 +185,8 @@ class Collectivite(object):
     </head>
         
     <body>
-        <a href="/html/map.html">Cliquez ici pour afficher la carte de localisation des magasins></a>
+        <a href="html/mapmagasin.html">Cliquez ici pour afficher la carte de localisation des magasins></a>
+        <a href="html/mapfoyer.html">Cliquez ici pour afficher la carte de localisation des foyers></a>
         <h1 id = "myHeader">Liste des 5 produits les plus commandés</h1>
         <table style="width:100%">
         <tr>
@@ -169,7 +209,7 @@ class Collectivite(object):
             <th><h2 class = "produit">Les '''+self.top5produits[4]+''' sont le cinquième produit le plus commandé.</h2></th>
             <th><h1><img src="/images/etoile.png"></h1></th>
         </tr>
-        <button type="submit">Retour vers l'accueil</button>
+        <a href="/accueil/"><button type="submit">Retour vers l'accueil</button></a>
     </body>
 </html>
 '''
