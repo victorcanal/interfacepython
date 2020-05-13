@@ -2,6 +2,7 @@ import cherrypy
 import os
 import pymysql
 import folium
+import numpy as np
 from geopy.geocoders import Nominatim
 
 def connexionBDD():
@@ -128,13 +129,16 @@ class Collectivite(object):
         #folium.Marker([location.latitude, location.longitude],popup="carrefour").add_to(c)
         sql = "select adresse_lat,adresse_long,nom_magasin from magasin"
         connection = connexionBDD()
-        tableauAdresse = []
+        tableauAdresse = [][]
         try:
             cursor = connection.cursor()
             cursor.execute(sql)
             connection.commit()
             for row in cursor:
-                tableauAdresse.append(row['adresse_lat','adresse_long','nom_magasin'])
+                tableauAdresse[i][0]=[row['adresse_lat']
+                tableauAdresse[i][1]=row['adresse_long']
+                tableauAdresse[i][2]=row['nom_magasin']
+                i+=1
         finally:
             connection.close()
         for row in tableauAdresse:
@@ -162,7 +166,7 @@ class Collectivite(object):
         a.save('html/mapfoyer.html')
         
     def produitsPlusDemandes(self):
-        sql = "select nomProduit ,sum(quantite) from produit group by nomProduit order by sum(quantite) desc limit 5;"
+        sql = "select nom_produit ,sum(quantiteCommandee) from commande group by nom_produit order by sum(quantiteCommandee) desc limit 5;"
         connection = connexionBDD()
         tableauProduits = []
         try :
@@ -170,9 +174,10 @@ class Collectivite(object):
             cursor.execute(sql)
             connection.commit()
             for row in cursor:
-                tableauProduits.append(row['nomProduit'])
+                tableauProduits.append(row['nom_produit'])
         finally:
             connection.close()
+        print(tableauProduits)
         return tableauProduits
     
     @cherrypy.expose
@@ -218,7 +223,6 @@ class Collectivite(object):
 '''    
     def mapmagasin():
         return open("html/mapmagasin.html")
-
     def mapfoyer():
         return open("html/mapfoyer.html")
 '''   
@@ -248,10 +252,6 @@ class Produits(object):
             ['Chocolat', '', 'tablette(s)'],
             ['Sucre', '', 'paquet(s) de 1 kilo']]
         
-    
-            
-        
-                        
     @cherrypy.expose
     def index(self):
         # return open("html/produits.html")
@@ -292,13 +292,12 @@ class Produits(object):
         connection = connexionBDD()
         try:
             with connection.cursor() as cursor:
-                sql = "INSERT INTO produit(nom_produit,quantiteCommandee) VALUES(%s,%s);"
+                sql = "INSERT INTO commande(nom_produit,quantiteCommandee) VALUES(%s,%s);"
                 cursor.execute(sql,(produit,quantite))
                 connection.commit()
         finally:
             connection.close()
         
-    
     @cherrypy.expose
     def result(self, quantite_temp):
         #met la liste des quantités (quantite_temp) dans la matrice quantite de base
@@ -307,7 +306,6 @@ class Produits(object):
                 quantite_temp[i]=0
             self.quantite[i][1] = int(quantite_temp[i])
             if self.quantite[i][1]>0:
-                
                 self.ajoutCommande(self.quantite[i][0],int(quantite_temp[i]))
         html = '<html><head>'
         html += '<meta charset="utf-8" name="Recapitulatif" content="Récapitulatif de la commande">'
