@@ -142,10 +142,11 @@ class Collectivite(object):
     <head>
         <meta charset="utf-8" name="Collectivite" content="Liste des 5 produits les plus commandés">
         <link rel="stylesheet" type="text/css" href="../css/collectivite.css">
-        <title>Liste des 5 produits les plus commandés</title>
+        <title>Collectivités</title>
     </head>
         
     <body>
+        <a href="/html/map.html">Cliquez ici pour afficher la carte de localisation des magasins></a>
         <h1 id = "myHeader">Liste des 5 produits les plus commandés</h1>
         <table style="width:100%">
         <tr>
