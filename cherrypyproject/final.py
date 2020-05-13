@@ -229,6 +229,7 @@ def recupNomClient():
 class Produits(object):
     @cherrypy.expose
     def __init__(self):
+        self.accueil = Accueil()
         self.quantite = [['Pâtes', '', 'paquet(s) de 500 grammes'],
             ['Riz', '', 'paquet(s) de 500 grammes'],
             ['Eau', '', 'pack(s) de 8 bouteilles'],
@@ -266,6 +267,7 @@ class Produits(object):
         html += '<body>'
         html += '<a href = "produits">Produits</a>'
         html += '<a href = "recapitulatif">Récapitulatif</a>'
+        
         html += '<h1 id = "myHeader">Commande</h1>'
         html += '<p>Choisissez votre produit ainsi que la quantité souhaitée. Mettez une quantité à côté du produit qui vous intéresse. Si vous ne mettez pas de quantité pour un produit il ne sera pas commandé. </p>'
         html += '<form method ="POST" action ="result">'
@@ -275,8 +277,15 @@ class Produits(object):
             html += '<br><input placeholder="Quantité de '+self.quantite[i][0]+' :" name="quantite_temp"/>'
             #obligés de mettre la liste des quantités dans une liste, cherrypy ne prend pas en compte les matrices
             html += '<label for ="unite">' + self.quantite[i][2] + '.</label></br>'
-        html += '<p></p><button type="submit">Valider la commande</button>'
-        html += '</form></body></html>'
+        
+        html += '</table>'
+        html += '<table style = "width : 100%">'
+        html += '<tr>'
+        html += '<th><p>Votre commande sera directement débitée de votre carte bancaire.</p>'
+        html += '<p></p><a href="/accueil/"><button type="submit">Se déconnecter</button></a>'
+        html += '<p></p><a href="/produits/"><button type="submit">Passer une autre commande</button></a></th>'
+        html += '</tr>'
+        html += '</table></body></html>'
         return html
     index.exposed = True
     #toutes les quantités sont dans un tableau
