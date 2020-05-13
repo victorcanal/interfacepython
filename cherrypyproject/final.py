@@ -8,7 +8,7 @@ def connexionBDD():
     connection = pymysql.connect(host='127.0.0.1',
     user='root',
     password='Pichagouille47',                             
-    db='python',
+    db='python1',
     charset='utf8mb4',
     cursorclass=pymysql.cursors.DictCursor)
     return connection
@@ -95,7 +95,6 @@ class Connexion(object):
         if self.checkIfClientInscrit(inputpassword,inputemail) == False:
             raise cherrypy.HTTPRedirect('/inscription/')
         else:
-            #UTILISATEUR_COURANT=self.checkIfClientInscrit(inputpassword,inputemail)
             raise cherrypy.HTTPRedirect('/produits/')
     
     def checkIfClientInscrit(self,inputpassword,inputemail):
@@ -121,13 +120,13 @@ class Connexion(object):
 class Collectivite(object):
     @cherrypy.expose
     def __init__(self):
-        self.accueil = Accueil()
+        #self.accueil = Accueil()
         self.top5produits = self.produitsPlusDemandes()
         c= folium.Map(location=[48.8600019,2.3449987],zoom_start=15) #zoom sur le quartier cible, nous 1e arrondissement
         geolocator = Nominatim()
         #location = geolocator.geocode("29 rue des Bourdonnais, 75001")
         #folium.Marker([location.latitude, location.longitude],popup="carrefour").add_to(c)
-        sql = "select adresse,nom from magasin"
+        sql = "select adresse_lat,adresse_long,nom_magasin from magasin"
         connection = connexionBDD()
         tableauAdresse = []
         try:
@@ -135,12 +134,14 @@ class Collectivite(object):
             cursor.execute(sql)
             connection.commit()
             for row in cursor:
-                tableauAdresse.append(row['adresse','nom'])
+                tableauAdresse.append(row['adresse_lat','adresse_long','nom_magasin'])
         finally:
             connection.close()
         for row in tableauAdresse:
-            location = geolocator.geocode(row[0])
-            folium.Marker([location.latitude, location.longitude],popup=row[1]).add_to(c)
+            #location = geolocator.geocode(row[0])
+            locationLat = row[0]
+            locationLong = row[1]
+            folium.Marker([locationLat, locationLong],popup=row[2]).add_to(c)
         c.save('html/mapmagasin.html')
         a = folium.Map(location=[48.8600019,2.3449987],zoom_start=15) #zoom sur le quartier cible, nous 1e arrondissement
         geolocator = Nominatim()
@@ -161,7 +162,7 @@ class Collectivite(object):
         a.save('html/mapfoyer.html')
         
     def produitsPlusDemandes(self):
-        sql = "select nom_produit ,sum(quantiteCommandee) from produit group by nom_produit order by sum(quantiteCommandee) desc limit 5;"
+        sql = "select nomProduit ,sum(quantite) from produit group by nomProduit order by sum(quantite) desc limit 5;"
         connection = connexionBDD()
         tableauProduits = []
         try :
@@ -169,7 +170,7 @@ class Collectivite(object):
             cursor.execute(sql)
             connection.commit()
             for row in cursor:
-                tableauProduits.append(row['nom_produit'])
+                tableauProduits.append(row['nomProduit'])
         finally:
             connection.close()
         return tableauProduits
@@ -185,8 +186,8 @@ class Collectivite(object):
     </head>
         
     <body>
-        <a href="html/mapmagasin.html">Cliquez ici pour afficher la carte de localisation des magasins></a>
-        <a href="html/mapfoyer.html">Cliquez ici pour afficher la carte de localisation des foyers></a>
+        <a href="/html/mapmagasin.html">Cliquez ici pour afficher la carte de localisation des magasins></a>
+        <a href="/html/mapfoyer.html">Cliquez ici pour afficher la carte de localisation des foyers></a>
         <h1 id = "myHeader">Liste des 5 produits les plus commandés</h1>
         <table style="width:100%">
         <tr>
@@ -214,22 +215,17 @@ class Collectivite(object):
 </html>
 '''
     index.exposed = True
-    
-"""
-def recupNomClient():
-    connection = connexionBDD()
-    with connection.cursor() as cursor:
-        sql = "SELECT nom from foyer where idCompte = %s ;"
-        cursor.execute(sql,(UTILISATEUR_COURANT))
-        resultat = cursor.fetchone()
-        connection.commit()
-        return resultat['nom']
-    connection.close()
-"""
+'''    
+    def mapmagasin():
+        return open("html/mapmagasin.html")
+
+    def mapfoyer():
+        return open("html/mapfoyer.html")
+'''   
 class Produits(object):
     @cherrypy.expose
     def __init__(self):
-        self.accueil = Accueil()
+        #self.accueil = Accueil()
         self.quantite = [['Pâtes', '', 'paquet(s) de 500 grammes'],
             ['Riz', '', 'paquet(s) de 500 grammes'],
             ['Eau', '', 'pack(s) de 8 bouteilles'],
@@ -347,6 +343,11 @@ conf = {
         { 
             'tools.staticdir.on':True,
             'tools.staticdir.dir':os.path.abspath("./css")
+        },
+        '/html':
+        { 
+            'tools.staticdir.on':True,
+            'tools.staticdir.dir':os.path.abspath("./html")
         },
         '/':
         {
