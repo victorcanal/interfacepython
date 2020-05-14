@@ -59,12 +59,12 @@ class Inscription(object):
         email = str(donnees[0])
         motDePasse = str(donnees[1])
         nom = donnees[2]
-        adresse = donnees[4]
-        nDeTel = donnees[5]
-        nombrePers = donnees[6]
-        numCarte = donnees[7]
-        dateExpiration = donnees[8]
-        cryptogramme = donnees[9]
+        adresse = str(donnees[4]+' '+donnees[5]+' '+donnees[6])
+        nDeTel = donnees[7]
+        nombrePers = donnees[8]
+        numCarte = donnees[9]
+        dateExpiration = donnees[10]
+        cryptogramme = donnees[11]
         connection = connexionBDD()
         try:
             with connection.cursor() as cursor:
