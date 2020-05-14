@@ -2,7 +2,6 @@ import cherrypy
 import os
 import pymysql
 import folium
-import numpy as np
 from geopy.geocoders import Nominatim
 
 def connexionBDD():
@@ -129,25 +128,23 @@ class Collectivite(object):
         #folium.Marker([location.latitude, location.longitude],popup="carrefour").add_to(c)
         sql = "select adresse_lat,adresse_long,nom_magasin from magasin"
         connection = connexionBDD()
-        tableauAdresse = [][]
+        tableauAdresse = []
         try:
-            cursor = connection.cursor()
-            cursor.execute(sql)
-            connection.commit()
-            for row in cursor:
-                tableauAdresse[i][0]=[row['adresse_lat']
-                tableauAdresse[i][1]=row['adresse_long']
-                tableauAdresse[i][2]=row['nom_magasin']
-                i+=1
+            with connection.cursor() as cursor:
+                cursor.execute(sql)
+                connection.commit()
+                for row in cursor:
+                    tableauAdresse.append({'adresse_lat':row['adresse_lat'],'adresse_long':row['adresse_long'],'nom_magasin':row['nom_magasin']})
         finally:
             connection.close()
         for row in tableauAdresse:
             #location = geolocator.geocode(row[0])
-            locationLat = row[0]
-            locationLong = row[1]
-            folium.Marker([locationLat, locationLong],popup=row[2]).add_to(c)
+            locationLat = row['adresse_lat']
+            locationLong = row['adresse_long']
+            nom_magasin = row['nom_magasin']
+            folium.Marker([locationLat, locationLong],popup=nom_magasin).add_to(c)
         c.save('html/mapmagasin.html')
-        a = folium.Map(location=[48.8600019,2.3449987],zoom_start=15) #zoom sur le quartier cible, nous 1e arrondissement
+        a = folium.Map(location=[48.8600019,2.3449987],zoom_start=15) #zoom sur le quartier cible, nous 1e arrondissement de Paris
         geolocator = Nominatim()
         sql = "select adresse from foyer"
         connection = connexionBDD()
@@ -177,7 +174,6 @@ class Collectivite(object):
                 tableauProduits.append(row['nom_produit'])
         finally:
             connection.close()
-        print(tableauProduits)
         return tableauProduits
     
     @cherrypy.expose
