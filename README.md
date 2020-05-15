@@ -8,6 +8,7 @@ Groupe composé de : Victor Canal, Aymeric Peronnau-Nyssens, Anna Bouillon, Bian
 INFORMATIONS GENERALES
 
 Nous avons hebergé notre programme sur le site https://vcanal.pythonanywhere.com/
+
 Les fichiers hébergés sur GitHub ne sont pas exactement identiques à ceux sur le site; nous avons pu faire quelques modifications mineures pour améliorer/optimiser notre code.
 
 Notre projet est de répondre aux demandes des citoyens et des collectivités dans le cas d'un confinement total. Nous nous occupons de la gestion des demandes (saisie et analyse). 
