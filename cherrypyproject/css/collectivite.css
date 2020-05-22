@@ -13,3 +13,7 @@ img {
   height: 100px;
   float: left;
 }
+#piechart{
+    display: table;
+    margin: 0 auto;
+}

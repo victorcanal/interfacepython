@@ -4,19 +4,20 @@
 		<meta charset="utf-8" name="Inscription" content="Page d'inscription">
 		<link rel="stylesheet" type="text/css" href="../css/global.css">
 		<link rel="stylesheet" type="text/css" href="../css/inscription.css">
+		<link rel="shortcut icon" href="../images/house-user-solid.svg"/>
 		<title>Inscription</title>
 	</head>
 	<body>
-<!-- 		<nav>
-			<a href="accueil">Accueil</a>
-			<a href="inscription">Inscription</a>
-			<a href="connexion">Connexion</a>
-		</nav> -->
+		<nav>
+			<a href="/">Accueil</a>
+			<a href="/inscription/">Inscription</a>
+			<a href="/connexion/">Connexion</a>
+		</nav>
 		<header>
 			<h1>Inscription</h1>
 		</header>
 		<div>
-			<h3>Veuillez entrer vos informations :</h3>
+			<h2>Veuillez entrer vos informations :</h2>
 			<form method="post" action="generate">
 				<p>Adresse e-mail</p>
 				<input type="email" name="inputemail">
@@ -29,14 +30,14 @@
 				<p>Num&eacutero de rue</p>
 				<input type="text" name="inputnumerorue">
 				<p>Nom de la rue</p>
-				<input type="text" name="inputnomrue" value="Exemple : avenue des Champs-Elysées">
+				<input type="text" name="inputnomrue" placeholder="avenue des Champs-Elysées">
 				<p>Code postal</p>
 				<input type="text" name="inputcodepostal">
 				<p>Num&eacutero de t&eacutel&eacutephone</p>
 				<input type="tel" name="inputnumero">
 				<p>Nombre de personnes dans le foyer</p>
 				<input type="number" name="inputnombre">
-				<p>Num&eacutero de la carte </p>
+				<p>Num&eacutero de carte bancaire</p>
 				<input type="text" name="inputnumcarte" minlength="16" maxlength="16">
 				<p>Date d'expiration</p>
 				<input type="date" min="2020-04-01" value="2020-04-01" name="inputexpirationdate">

@@ -1,11 +1,12 @@
 button{
 	margin: 15px;
-	height: 75px;
-	width: 150px;
+	height: 100px;
+	width: 200px;
 	align-items: center;
 	background-color: #000000;
 	color: #FFFFFF;
 	border-color: #000000;
+	font-size: 20px;
 }
 .buttons{
 	text-align: center;
@@ -13,4 +14,10 @@ button{
 p{
 	margin-top: 10px;
 	margin-left: 0px;
+}
+.titre{
+    margin-top: 50px;
+    text-align: center;
+    font-family: Georgia, Arial;
+    font-size: 72px;
 }
